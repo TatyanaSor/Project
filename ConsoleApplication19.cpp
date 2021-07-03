@@ -76,6 +76,41 @@ string remove_spaces(string str)
 	return str;
 }
 
+auto detect_obj(string obj, string &line, ofstream &file){
+	while (remove_spaces(line) != obj)
+		getline(file, line);
+
+	if (remove_spaces(line) == "10")
+	{
+
+		string::size_type sz;
+		getline(file, line);
+
+		float a = stof(line, &sz);
+
+		circl->x = a;
+		getline(file, line);
+
+		if (remove_spaces(line) == "20")
+		{
+			getline(file, line);
+
+			float b = stof(line, &sz);
+			circl->y = b;
+			getline(file, line);
+
+			if (remove_spaces(line) == "30")
+			{
+				getline(file, line);
+
+				float c = stof(line, &sz);
+				circl->z = c;
+			}
+		}
+
+}
+
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
@@ -113,36 +148,7 @@ int main()
 			if (remove_spaces(line) == "CIRCLE")
 			{
 
-				while (remove_spaces(line) != "10")
-					getline(file, line);
-
-				if (remove_spaces(line) == "10")
-				{
-
-					string::size_type sz;
-					getline(file, line);
-
-					float a = stof(line, &sz);
-
-					circl->x = a;
-					getline(file, line);
-
-					if (remove_spaces(line) == "20")
-					{
-						getline(file, line);
-
-						float b = stof(line, &sz);
-						circl->y = b;
-						getline(file, line);
-
-						if (remove_spaces(line) == "30")
-						{
-							getline(file, line);
-
-							float c = stof(line, &sz);
-							circl->z = c;
-						}
-					}
+				detect_obj("CIRCLE", line, file);
 
 				}
 				V.push_back(circl);
